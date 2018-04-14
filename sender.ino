@@ -9,28 +9,21 @@ uint32_t delayMS;
 
 void setup() {
 
-  const char* ssid     = "NAME_WLAN";
-  const char* password = "PASSWORD_WLAN";
+  const char* ssid     = "NAME_WLAN"; 		//edit W-LAN name
+  const char* password = "PASSWORD_WLAN"; 	//edit W-LAN password
 
   const char* host = "emoncms.org";
-  const char* apikey = "API_KEY";
+  const char* apikey = "API_KEY"; 		//edit API key from emoncms
 
   Serial.begin(115200);
 
   dht.begin();
-  // Wait a few seconds between measurements.
   delay(2000);
   Serial.println();
   Serial.println();
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
   float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
   float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
-  //float f = dht.readTemperature(true);
 
-  // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
     ESP.deepSleep(10e6);
@@ -63,7 +56,6 @@ void setup() {
   Serial.print("connecting to ");
   Serial.println(host);
 
-  // Use WiFiClient class to create TCP connections
   WiFiClient client;
   const int httpPort = 80;
   if (!client.connect(host, httpPort)) {
@@ -84,7 +76,6 @@ void setup() {
                "Connection: close\r\n\r\n");
   delay(2000);
 
-  // Read all the lines of the reply from server and print them to Serial
   while (client.available()) {
     String line = client.readStringUntil('\r');
     Serial.print(line);
@@ -93,7 +84,7 @@ void setup() {
   Serial.println();
   Serial.println("closing connection");
 
-  ESP.deepSleep(1200e6);
+  ESP.deepSleep(1200e6); 		//edit time intervall (optional)
 }
 
 void loop() {
